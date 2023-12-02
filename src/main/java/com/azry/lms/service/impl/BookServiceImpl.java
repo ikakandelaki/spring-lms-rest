@@ -3,10 +3,10 @@ package com.azry.lms.service.impl;
 import com.azry.lms.dto.request.BookRequest;
 import com.azry.lms.dto.response.BookResponse;
 import com.azry.lms.entity.Book;
+import com.azry.lms.exception.ResourceNotFoundException;
 import com.azry.lms.repository.BookRepository;
 import com.azry.lms.service.BookService;
 import com.azry.lms.util.MappingUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
 
@@ -57,9 +56,8 @@ public class BookServiceImpl implements BookService {
         bookRepository.delete(book);
     }
 
-    // TODO: 12/2/2023 add exception and log it
     private Book getBook(Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
     }
 }
