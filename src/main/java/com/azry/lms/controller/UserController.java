@@ -3,6 +3,7 @@ package com.azry.lms.controller;
 import com.azry.lms.dto.response.BookResponse;
 import com.azry.lms.dto.response.UserResponse;
 import com.azry.lms.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-// TODO: 12/2/2023 add security by admin role
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class UserController {
     private final UserService userService;
 

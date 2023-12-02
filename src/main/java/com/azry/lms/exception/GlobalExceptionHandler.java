@@ -3,6 +3,8 @@ package com.azry.lms.exception;
 import com.azry.lms.dto.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,6 +52,21 @@ public class GlobalExceptionHandler {
                 exception);
 
         return getExceptionResponse(exception, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionResponse handleAccessDeniedException(AccessDeniedException exception, WebRequest request) {
+        log.error("Access denied", exception);
+
+        return getExceptionResponse(exception, request);
+    }
+
+    @ExceptionHandler(LmsException.class)
+    public ResponseEntity<ExceptionResponse> handleLmsException(LmsException exception, WebRequest request) {
+        log.error("App exception occurred: {}", exception.getMessage(), exception);
+
+        return new ResponseEntity<>(getExceptionResponse(exception, request), exception.getStatus());
     }
 
     @ExceptionHandler(Exception.class)

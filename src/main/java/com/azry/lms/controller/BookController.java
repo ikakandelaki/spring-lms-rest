@@ -5,6 +5,7 @@ import com.azry.lms.dto.response.BookResponse;
 import com.azry.lms.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,22 +33,22 @@ public class BookController {
         return bookService.searchBooks(query);
     }
 
-    // TODO: 12/2/2023 protect with admin role
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public BookResponse addBook(@RequestBody @Valid BookRequest request) {
         return bookService.addBook(request);
     }
 
-    // TODO: 12/2/2023 protect with admin role
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public BookResponse editBook(@PathVariable Long id, @RequestBody @Valid BookRequest request) {
         return bookService.editBook(id, request);
     }
 
-    // TODO: 12/2/2023 protect with admin role
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
