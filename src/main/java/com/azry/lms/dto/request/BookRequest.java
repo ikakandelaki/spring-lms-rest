@@ -1,6 +1,6 @@
 package com.azry.lms.dto.request;
 
-import com.azry.lms.util.RegexConstant;
+import com.azry.lms.util.constant.RegexConstant;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
