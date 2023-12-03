@@ -7,6 +7,7 @@ create table users_roles
     constraint fk_users_roles_roles foreign key (role_id) references roles (id)
 );
 
+-- user1 will be admin, others - just users
 insert into users_roles(user_id, role_id)
 values(1, 1),
       (1, 2),
