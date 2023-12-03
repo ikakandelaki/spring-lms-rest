@@ -10,10 +10,6 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 public class BookMessage implements Serializable {
-    public enum MessageType {
-        BORROW, RETURN
-    }
-
     private Long bookId;
-    private MessageType messageType;
+    private Long userId;
 }

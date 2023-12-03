@@ -1,5 +1,6 @@
 package com.azry.lms.util.constant;
 
 public interface JmsConstant {
-    String QUEUE_NAME = "lms.queue";
+    String LMS_BORROW_QUEUE = "lms.borrow.queue";
+    String LMS_RETURN_QUEUE = "lms.borrow.queue";
 }

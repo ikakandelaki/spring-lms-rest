@@ -13,4 +13,8 @@ public interface BookService {
     BookResponse editBook(Long id, BookRequest request);
 
     void deleteBook(Long id);
+
+    BookResponse borrowBook(Long id);
+
+    BookResponse returnBook(Long id);
 }

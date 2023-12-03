@@ -2,8 +2,6 @@ package com.azry.lms.controller;
 
 import com.azry.lms.dto.request.BookRequest;
 import com.azry.lms.dto.response.BookResponse;
-import com.azry.lms.messaging.model.BookMessage;
-import com.azry.lms.messaging.sender.BookMessageSender;
 import com.azry.lms.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,11 +23,9 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
     private final BookService bookService;
-    private final BookMessageSender bookMessageSender;
 
-    public BookController(BookService bookService, BookMessageSender bookMessageSender) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
-        this.bookMessageSender = bookMessageSender;
     }
 
     @GetMapping
@@ -58,14 +54,12 @@ public class BookController {
     }
 
     @PutMapping("/{id}/borrow")
-    public void borrowBook(@PathVariable Long id) {
-        BookMessage bookMessage = new BookMessage(id, BookMessage.MessageType.BORROW);
-        bookMessageSender.sendBookMessage(bookMessage);
+    public BookResponse borrowBook(@PathVariable Long id) {
+        return bookService.borrowBook(id);
     }
 
     @PutMapping("/{id}/return")
-    public void returnBook(@PathVariable Long id) {
-        BookMessage bookMessage = new BookMessage(id, BookMessage.MessageType.RETURN);
-        bookMessageSender.sendBookMessage(bookMessage);
+    public BookResponse returnBook(@PathVariable Long id) {
+        return bookService.returnBook(id);
     }
 }
