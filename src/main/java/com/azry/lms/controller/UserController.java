@@ -1,12 +1,19 @@
 package com.azry.lms.controller;
 
+import com.azry.lms.dto.request.UserRequest;
 import com.azry.lms.dto.response.BookResponse;
 import com.azry.lms.dto.response.UserResponse;
 import com.azry.lms.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,5 +38,15 @@ public class UserController {
         return userService.getBorrowedBooksOfUser(id);
     }
 
-    // TODO: 12/2/2023 add user creation, edit, delete apis after adding security to app
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponse createUser(@RequestBody @Valid UserRequest request) {
+        return userService.createUser(request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
 }
