@@ -36,8 +36,12 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = getUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
         Date expiration = extractClaim(token, Claims::getExpiration);
-        return username.equals(userDetails.getUsername()) && !expiration.before(new Date());
+        return expiration.before(new Date());
     }
 
     private SecretKey getKey() {
