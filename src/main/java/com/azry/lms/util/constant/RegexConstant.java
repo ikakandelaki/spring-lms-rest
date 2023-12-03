@@ -1,4 +1,4 @@
-package com.azry.lms.util;
+package com.azry.lms.util.constant;
 
 public interface RegexConstant {
     // Book Regex To Validate ISBN-10 AND ISBN-13 Formats

@@ -52,4 +52,14 @@ public class BookController {
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
+
+    @PutMapping("/{id}/borrow")
+    public BookResponse borrowBook(@PathVariable Long id) {
+        return bookService.borrowBook(id);
+    }
+
+    @PutMapping("/{id}/return")
+    public BookResponse returnBook(@PathVariable Long id) {
+        return bookService.returnBook(id);
+    }
 }
